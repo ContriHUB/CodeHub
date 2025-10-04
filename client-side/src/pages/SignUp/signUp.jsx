@@ -27,6 +27,7 @@ function Signup() {
         cfID: "",
         email: "",
         password: "",
+        confirmPassword: "",
     });
 
     //manage state of the errors.
@@ -50,6 +51,9 @@ function Signup() {
         else if (!emailRegex.test(formData.email))
             newErrors.email = "Invalid email format";
         if (!formData.password.trim()) newErrors.password = "Password is required";
+        if (!formData.confirmPassword.trim()) newErrors.confirmPassword = "Confirm Password is required";
+        else if (formData.password !== formData.confirmPassword) 
+            newErrors.confirmPassword = "Passwords do not match";
         return newErrors;
     };
 
@@ -176,7 +180,7 @@ function Signup() {
                         </div>
 
                         {/* Password */}
-                        <div className="mb-6">
+                        <div className="mb-4">
                             <label
                                 htmlFor="password"
                                 className="block text-sm md:text-base font-semibold text-[#C5C5FF] mb-2"
@@ -199,6 +203,33 @@ function Signup() {
                             {/* Display error message */}
                             {errors.password && (
                                 <p className="text-red-500 text-xs">{errors.password}</p>
+                            )}
+                        </div>
+
+                        {/* Confirm Password */}
+                        <div className="mb-6">
+                            <label
+                                htmlFor="confirmPassword"
+                                className="block text-sm md:text-base font-semibold text-[#C5C5FF] mb-2"
+                            >
+                                Confirm Password
+                            </label>
+                            <input
+                                name="confirmPassword"
+                                id="confirmPassword"
+                                type="password"
+                                value={formData.confirmPassword}
+                                onChange={handleChange}
+                                placeholder="****************"
+                                // apply styles based on the error.
+                                className={cn(
+                                    "w-full p-2 md:p-3 rounded border focus:outline-none focus:border-blue-400 bg-[#121232] text-gray-300 placeholder-gray-500",
+                                    errors.confirmPassword && "border-red-500"
+                                )}
+                            />
+                            {/* Display error message */}
+                            {errors.confirmPassword && (
+                                <p className="text-red-500 text-xs">{errors.confirmPassword}</p>
                             )}
                         </div>
 
